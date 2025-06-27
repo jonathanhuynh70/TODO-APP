@@ -29,7 +29,7 @@ Navigate to the newly created folder:
 
 <b>Frontend</b>
 
-Install lastest version of npm
+Install latest version of npm
 
 Navigate to react-frontend subfolder:
 
