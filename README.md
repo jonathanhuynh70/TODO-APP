@@ -95,24 +95,31 @@ then run the project, running on localhost:8080
     - Alongside this, API calls can be made where a faulty object is given in the request body, and this can create task objects that are missing titles and descriptions. Should be throwing an error instead. 
 
 - Using Integers as ID instead of other formats:
-    - Given the small nature of this project, I thought using Integers would suffice. - Pros: Its fast to index and number, and takes up little memory - Con: - It has a limited range and this matters more for larger applications - in distributed databases, it is hard to enforce uniqueness, only works well in a single-serve application like this.
+    - Given the small nature of this project, I thought using Integers would suffice.
+    - Pros:
+        - Its fast to index and number, and takes up little memory
+    - Con:
+        - It has a limited range and this matters more for larger applications
+        - in distributed databases, it is hard to enforce uniqueness, only works well in a single-serve application like this.
  
 
 
 Other options for IDs were:
 
 - Strings: were deemed to not be worth it due ot the storage size and unnecessary nature of having embedded information in the ids.
-    Pros:
+    - Pros:
         - URL friendly
         - can embed information into the ID
-    Cons:
+    - Cons:
         - Large storage
         - slower comparisons
         - still some collision risk
+ 
+
 - UUIDs: were deemed unnecessary and takes up too much storage
-    Pros:
+    - Pros:
         - Globally unique
-    Cons:
+    - Cons:
         - Storage size
         - Slower Performance
 
