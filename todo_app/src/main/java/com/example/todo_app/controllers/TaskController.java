@@ -1,5 +1,6 @@
 package com.example.todo_app.controllers;
 
+import com.example.todo_app.models.CreateTaskDetails;
 import com.example.todo_app.models.Task;
 import com.example.todo_app.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,25 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController // Restcontroller vs controller?
-@RequestMapping("/tasks")
-public class TodoController {
+@CrossOrigin("*")
+@RestController
+@RequestMapping("/tasksApi")
+public class TaskController {
 
     @Autowired
     TaskService taskService;
 
-    public String index() {
-        return "index.html";
-    }
-
-    // create a book
+    // create a Task
     @ResponseStatus(HttpStatus.CREATED) // 201
     @PostMapping("/create")
-    public Task create(@RequestBody Task task) {
-        return taskService.createTask(task);
+    public Task create(@RequestBody CreateTaskDetails taskDetails) {
+        return taskService.createTask(taskDetails.getTitle(), taskDetails.getDescription());
     }
 
-    // update a book
     @PutMapping("/update")
     public boolean update(@RequestBody Task task) {
         return taskService.updateTask(task);
@@ -35,12 +32,12 @@ public class TodoController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT) // 204
     @DeleteMapping("/{id}")
-    public boolean deleteTask(Long id) {
+    public boolean deleteTask(@PathVariable Long id) {
         return taskService.deleteTask(id);
     }
 
     @GetMapping("/getAllTasks")
-    public List<Task> getAllTasks() {
+    public Iterable<Task> getAllTasks() {
         return taskService.getAllTasks();
     }
 

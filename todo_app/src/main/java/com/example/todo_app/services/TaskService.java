@@ -1,6 +1,5 @@
 package com.example.todo_app.services;
 
-
 import com.example.todo_app.repositories.TaskRepository;
 import com.example.todo_app.models.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,9 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
-
+    public Task createTask(String title, String description) {
+        Task newTask = new Task(title, description);
+        return taskRepository.save(newTask);
     }
 
     public boolean deleteTask(Long id) {
@@ -34,7 +33,7 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public List<Task> getAllTasks() {
+    public Iterable<Task> getAllTasks() {
         return taskRepository.findAll();
     }
 

@@ -10,17 +10,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Testing with TestRestTemplate and @Testcontainers (image mysql:8.0-debian)
- */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-// activate automatic startup and stop of containers
 public class TaskControllerTests {
 
     @LocalServerPort
@@ -37,14 +31,14 @@ public class TaskControllerTests {
     @BeforeEach
     void testSetUp() {
 
-        BASEURI = "http://localhost:" + port;
+        BASEURI = "http://localhost:" + port + "/tasksApi";
 
         taskRepository.deleteAll();
 
-        Task b1 = new Task("test", "Test description", "productivity", new Date());
-        Task b2 = new Task("test2", "Test description2", "productivity", new Date());
-        Task b3 = new Task("test3", "Test description3", "productivity", new Date());
-        Task b4 = new Task("test4", "Test description4", "productivity", new Date());
+        Task b1 = new Task("test", "Test description");
+        Task b2 = new Task("test2", "Test description2");
+        Task b3 = new Task("test3", "Test description3");
+        Task b4 = new Task("test4", "Test description4");
 
         taskRepository.saveAll(List.of(b1, b2, b3, b4));
     }
@@ -52,14 +46,11 @@ public class TaskControllerTests {
     @Test
     void testFindAll() {
 
-        // ResponseEntity<List> response = restTemplate.getForEntity(BASEURI + "/tasks",
-        // List.class);
-
         // find all Tasks and return List<Task>
         ParameterizedTypeReference<List<Task>> typeRef = new ParameterizedTypeReference<>() {
         };
         ResponseEntity<List<Task>> response = restTemplate.exchange(
-                BASEURI + "/tasks/getAllTasks",
+                BASEURI + "/getAllTasks",
                 HttpMethod.GET,
                 null,
                 typeRef);
@@ -77,7 +68,7 @@ public class TaskControllerTests {
 
         // find Task C
         ResponseEntity<List<Task>> response = restTemplate.exchange(
-                BASEURI + "/tasks/search/" + title,
+                BASEURI + "/search/" + title,
                 HttpMethod.GET,
                 null,
                 typeRef);
@@ -90,7 +81,7 @@ public class TaskControllerTests {
 
         assertEquals(1, list.size());
 
-        // Test Task C details
+        // Test test2 title
         Task task = list.get(0);
         assertEquals("test2", task.getTitle());
 
@@ -99,15 +90,12 @@ public class TaskControllerTests {
     @Test
     public void testDeleteById() {
 
-        List<Task> list = taskRepository.findByTitle("test");
-        Task test = list.get(0);
-
-        // get Task A id
-        Long id = test.getId();
+        Task TaskD = taskRepository.findAll().iterator().next();
+        Long id = TaskD.getId();
 
         // delete by id
         ResponseEntity<Void> response = restTemplate.exchange(
-                BASEURI + "/tasks/deleteTask/" + id,
+                BASEURI + "/" + id,
                 HttpMethod.DELETE,
                 null,
                 Void.class);
@@ -115,44 +103,38 @@ public class TaskControllerTests {
         // test 204
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
-        // find Task A again, ensure no result
+        // find test again, ensure no result
         List<Task> listAgain = taskRepository.findByTitle("test");
         assertEquals(0, listAgain.size());
-
     }
 
     @Test
     public void testCreate() {
 
-        // Create a new Task E
-        Task newTask = new Task("Test Task 5", "Test description", "test", new Date());
+        // Create a new Task
+        Task newTask = new Task("Test Task 5", "Test description");
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         HttpEntity<Task> request = new HttpEntity<>(newTask, headers);
 
         // test POST save
-        ResponseEntity<Task> responseEntity = restTemplate.postForEntity(BASEURI + "/tasks/create", request,
+        ResponseEntity<Task> responseEntity = restTemplate.postForEntity(BASEURI + "/create", request,
                 Task.class);
 
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 
-        // find Task E
+        // find Test Task 5
         List<Task> list = taskRepository.findByTitle("Test Task 5");
 
-        // Test Task E details
+        // Test Task 5 details
         Task task = list.get(0);
         assertEquals("Test Task 5", task.getTitle());
     }
 
-    /**
-     * Task b4 = new Task("Task D",
-     * BigDecimal.valueOf(39.99),
-     * LocalDate.of(2023, 5, 5));
-     */
     @Test
     public void testUpdate() {
         // Find Task D
-        Task TaskD = taskRepository.findAll().get(0);
+        Task TaskD = taskRepository.findAll().iterator().next();
         Long id = TaskD.getId();
 
         // Update the Task details
@@ -166,7 +148,7 @@ public class TaskControllerTests {
 
         // Perform the PUT request to update the Task
         ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
-                "http://localhost:" + port + "/tasks/update",
+                BASEURI + "/update",
                 HttpMethod.PUT,
                 request,
                 Boolean.class);
@@ -179,7 +161,38 @@ public class TaskControllerTests {
 
         assertEquals(id, updatedTask.getId());
         assertEquals("Updated Task Name", updatedTask.getTitle());
+    }
 
+    @Test
+    public void testComplete() {
+        // Find Task D
+        Task TaskD = taskRepository.findAll().iterator().next();
+        Long id = TaskD.getId();
+
+        // Update the Task details
+        TaskD.setCompleted(true);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+
+        // put the updated Task in HttpEntity
+        HttpEntity<Task> request = new HttpEntity<>(TaskD, headers);
+
+        // Perform the PUT request to update the Task
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
+                BASEURI + "/update",
+                HttpMethod.PUT,
+                request,
+                Boolean.class);
+
+        // ensure OK
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+        // verify the updated Task
+        Task updatedTask = taskRepository.findById(id).orElseThrow();
+
+        assertEquals(id, updatedTask.getId());
+        assertEquals(true, updatedTask.getCompleted());
     }
 
 }

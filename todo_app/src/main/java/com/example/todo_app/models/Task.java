@@ -4,14 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
 
-
 @Entity
-@Table(name="TASKS")
+@Table(name = "TASKS")
 @Data
 public class Task {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "title")
@@ -20,20 +19,11 @@ public class Task {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "type")
-    private String type;
-
-    @Column(name = "deadline")
-    private Date deadline;
-
     @Column(name = "completed")
     private Boolean completed;
 
     @Column(name = "dateCreated")
     private Date creationDate;
-
-    @Column(name = "dateCompleted")
-    private Date completionDate;
 
     public Long getId() {
         return id;
@@ -59,22 +49,6 @@ public class Task {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Date getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
-    }
-
     public Boolean getCompleted() {
         return completed;
     }
@@ -91,24 +65,14 @@ public class Task {
         this.creationDate = creationDate;
     }
 
-    public Date getCompletionDate() {
-        return completionDate;
-    }
+    public Task() {
+    };
 
-    public void setCompletionDate(Date completionDate) {
-        this.completionDate = completionDate;
-    }
-
-    public Task(){};
-
-    public Task(String title, String description, String type, Date deadline) {
+    public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.type = type;
-        this.deadline = deadline;
         this.completed = false;
         this.creationDate = new Date();
-        this.completionDate = null;
     }
 
 }
