@@ -94,8 +94,9 @@ then run the project, running on localhost:8080
     - CORS, Cross-Origin Resource Sharing, is a browser security feature that explicitly grants permission to access resources from its api interface. 
     - We at the moment do not implement CORS correctly, because in the TaskController class we ar9 just allowing every host to access and retrive the resources from the springboot backend. We would greatly increase the security of our application if we were to configure CORS correctly.  
 
-- Data validation for the task inputs:
-    - An improvement that can be made is the use of data validation for the inputs in the modal window in the frontend. We are currently just checking for null values, but we should also be checking for other things such as malicious code, if we were to allow dates we would need to check for the formatting, if we were checking
+- Data validation for the task inputs and API calls:
+    - An improvement that can be made is the use of data validation for the inputs in the modal window in the frontend. We are currently just checking for null values, but we should also be checking for other things such as malicious code, if we were to allow dates we would need to check for the formatting, if we were checking.
+    - Alongside this, API calls can be made where a faulty object is given in the request body, and this can create task objects that are missing titles and descriptions. Should be throwing an error instead. 
 
 - Using Integers as ID instead of other formats:
     - Given the small nature of this project, I thought using Integers would suffice. - Pros: Its fast to index and number, and takes up little memory - Con: - It has a limited range and this matters more for larger applications - in distributed databases, it is hard to enforce uniqueness, only works well in a single-serve application like this.
