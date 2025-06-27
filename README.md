@@ -29,7 +29,6 @@ Navigate to the newly created folder:
 
 <b>Frontend</b>
 
-Install latest version of npm
 
 Navigate to react-frontend subfolder:
 
@@ -49,9 +48,6 @@ http://localhost:5173
 
 <hr></hr>
 <b>Backend</b>
-
-Install latest JDK
-Install latest Maven
 
 Navigate to spring-backend subfolder:
 
