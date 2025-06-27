@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "d0639c7d-37a1-4069-8679-15df0742c865",
+		"name": "Todo_app API call examples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46253090",
+		"_collection_link": "https://jonathan-939314.postman.co/workspace/Jonathan's-Workspace~ac33ce9d-100c-4974-82dc-b9d6faa6e426/collection/46253090-d0639c7d-37a1-4069-8679-15df0742c865?action=share&source=collection_link&creator=46253090"
+	},
+	"item": [
+		{
+			"name": "getAllTasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tasksApi/getAllTasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasksApi",
+						"getAllTasks"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "getAllTasks example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tasksApi/getAllTasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasksApi",
+								"getAllTasks"
+							]
+						}
+					},
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date"
+						}
+					],
+					"body": "[\r\n    {\r\n        \"id\": 22,\r\n        \"title\": \"Updated Task Name\",\r\n        \"description\": \"Test description\",\r\n        \"completed\": false,\r\n        \"creationDate\": \"2025-06-27T08:26:26.173+00:00\"\r\n    },\r\n    {\r\n        \"id\": 23,\r\n        \"title\": \"test2\",\r\n        \"description\": \"Test description2\",\r\n        \"completed\": false,\r\n        \"creationDate\": \"2025-06-27T08:26:26.173+00:00\"\r\n    },\r\n    {\r\n        \"id\": 24,\r\n        \"title\": \"test3\",\r\n        \"description\": \"Test description3\",\r\n        \"completed\": false,\r\n        \"creationDate\": \"2025-06-27T08:26:26.173+00:00\"\r\n    },\r\n    {\r\n        \"id\": 25,\r\n        \"title\": \"test4\",\r\n        \"description\": \"Test description4\",\r\n        \"completed\": false,\r\n        \"creationDate\": \"2025-06-27T08:26:26.173+00:00\"\r\n    },\r\n    {\r\n        \"id\": 52,\r\n        \"title\": null,\r\n        \"description\": \"Grandma needs them\",\r\n        \"completed\": false,\r\n        \"creationDate\": \"2025-06-27T11:25:50.643+00:00\"\r\n    }\r\n]"
+				}
+			]
+		},
+		{
+			"name": "create Apples task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task\": \"Pick up apples\",\r\n    \"description\": \"Grandma needs them\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tasksApi/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasksApi",
+						"create"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Apples task example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task\": \"Pick up apples\",\r\n    \"description\": \"Grandma needs them\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tasksApi/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasksApi",
+								"create"
+							]
+						}
+					},
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date"
+						}
+					],
+					"body": "{\r\n    \"id\": 54,\r\n    \"title\": \"Pick up apples\",\r\n    \"description\": \"Grandma needs them\",\r\n    \"completed\": false,\r\n    \"creationDate\": \"2025-06-27T11:29:10.853+00:00\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "updating Task",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 22,\r\n    \"title\": \"Updated Task Name Twice now\",\r\n    \"description\": \"Updated Test description too\",\r\n    \"completed\": false,\r\n    \"creationDate\": \"2025-06-27T08:26:26.173+00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tasksApi/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasksApi",
+						"update"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Updating Task Eample",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 22,\r\n    \"title\": \"Updated Task Name Twice now\",\r\n    \"description\": \"Updated Test description too\",\r\n    \"completed\": false,\r\n    \"creationDate\": \"2025-06-27T08:26:26.173+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tasksApi/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasksApi",
+								"update"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Deleting Tasks",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 22,\r\n    \"title\": \"Updated Task Name Twice now\",\r\n    \"description\": \"Updated Test description too\",\r\n    \"completed\": false,\r\n    \"creationDate\": \"2025-06-27T08:26:26.173+00:00\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/tasksApi/22",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasksApi",
+						"22"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Deleting Tasks",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 22,\r\n    \"title\": \"Updated Task Name Twice now\",\r\n    \"description\": \"Updated Test description too\",\r\n    \"completed\": false,\r\n    \"creationDate\": \"2025-06-27T08:26:26.173+00:00\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/tasksApi/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasksApi",
+								"22"
+							]
+						}
+					},
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	]
+}
